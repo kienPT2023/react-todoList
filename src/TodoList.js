@@ -8,7 +8,7 @@ const TodoList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/todo")
+      .get(`${process.env.REACT_APP_BASE_URL_API}/todo`)
       .then((response) => {
         setTodos(response.data);
       })
@@ -19,7 +19,7 @@ const TodoList = () => {
 
   const addTodo = () => {
     axios
-      .post("http://localhost:8080/todo", {
+      .post(`${process.env.REACT_APP_BASE_URL_API}/todo`, {
         title: newTodo,
         isCompleted: false,
       })
@@ -34,7 +34,9 @@ const TodoList = () => {
 
   const toggleCompletion = (id, isCompleted) => {
     axios
-      .put(`http://localhost:8080/todo/${id}`, { isCompleted: !isCompleted })
+      .put(`${process.env.REACT_APP_BASE_URL_API}/todo/${id}`, {
+        isCompleted: !isCompleted,
+      })
       .then(() => {
         const updatedTodos = todos.map((todo) =>
           todo.id === id ? { ...todo, isCompleted: !isCompleted } : todo
@@ -48,7 +50,7 @@ const TodoList = () => {
 
   const deleteTodo = (id) => {
     axios
-      .delete(`http://localhost:8080/todo/${id}`)
+      .delete(`${process.env.REACT_APP_BASE_URL_API}/todo/${id}`)
       .then(() => {
         setTodos(todos.filter((todo) => todo.id !== id));
       })
